@@ -5,7 +5,7 @@ const path = require('path');
 // Helmet sécurise les requêtes HTTP, les en-têtes...
 const helmet = require('helmet');
 const cors = require("cors");
-
+const cookieParser = require('cookie-parser');
 // Créer un token d'identification
 const jwt = require('jsonwebtoken');
 
