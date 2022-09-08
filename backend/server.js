@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 // Importer package Node HTTP
 const http = require('http');
 

@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 // Créer un token d'identification
 const jwt = require('jsonwebtoken');
 
+
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
 
