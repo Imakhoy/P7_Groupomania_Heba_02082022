@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 // Framework node.js
 const express = require('express');
 const mongoose = require('mongoose');
