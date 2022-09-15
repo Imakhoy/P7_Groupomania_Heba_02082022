@@ -15,7 +15,6 @@ const userSchema = mongoose.Schema(
     password: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    department: { type: String, required: true },
     isAdmin: { type: Boolean, default: false },
   },
   { timestamps: true }

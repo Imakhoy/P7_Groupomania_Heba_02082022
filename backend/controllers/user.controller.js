@@ -13,14 +13,13 @@ const User = require("../models/user.model");
 exports.signup = (req, res, next) => {
   bcrypt.genSalt(parseInt(process.env.SALT))
   .then(salt=>{
-    bcrypt.hash(req.body.password, 10)
+    bcrypt.hash(req.body.password, salt)
       .then((hash) => {
         const user = new User({
           email: req.body.email,
           password: hash,
           firstName: req.body.firstName,
           lastName: req.body.lastName,
-          department: req.body.department
         });
         user.save()
         .then(() =>
@@ -105,7 +104,6 @@ exports.login = (req, res, next) => {
       })
       .catch((error) => res.status(401).json(error));
   };
-  //Suppression du compte utilisateur
 
 
       

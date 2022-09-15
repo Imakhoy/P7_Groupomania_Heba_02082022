@@ -1,11 +1,11 @@
 const dotenv = require('dotenv');
 dotenv.config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-// Helmet sécurise les requêtes HTTP, les en-têtes...
 const helmet = require('helmet');
-const cors = require("cors");
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
@@ -27,8 +27,6 @@ app.use(helmet());
 
 // CORS ==> Cross Origin Ressource Sharing
 //Import du middleware qui permet d'accéder à l'API avec les méthodes pour envoyer les requêtes
-
-
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", true);
