@@ -8,23 +8,23 @@ const { signUpError } = require('../utils/errors.utils');
 
 const User = require("../models/user.model");
 
-
 //Authentification
 //Creation du compte utilisateur
 exports.signup = (req, res, next) => {
-    bcrypt
-      .hash(req.body.password, 10)
+  bcrypt.genSalt(parseInt(process.env.SALT))
+  .then(salt=>{
+    bcrypt.hash(req.body.password, 10)
       .then((hash) => {
         const user = new User({
           email: req.body.email,
           password: hash,
           firstName: req.body.firstName,
           lastName: req.body.lastName,
+          department: req.body.department
+          
         });
-  
-        user
-          .save()
-          .then(() =>
+        user.save()
+        .then(() =>
             res.status(201).json({ message: "Compte utilisateur créé !" })
           )
           .catch((err) => {
@@ -34,6 +34,7 @@ exports.signup = (req, res, next) => {
       })
   
       .catch((error) => res.status(500).json({ error }));
+    })
   };
   
   // Connexion de l'utilisateur
@@ -75,59 +76,6 @@ exports.login = (req, res, next) => {
   //Récupérer un utilisateur
   //Suppression du compte utilisateur
 
-
-
-//Controllers pour créer un compte
-//Mettre en place le saltage en plus du hasage :
-exports.signup = (req, res, next) => {
-    bcrypt.genSalt(parseInt(process.env.SALT))
-    .then(salt=>{
-      bcrypt.hash(req.body.password, salt)
-      // salt = 10 ( nombre de fois ou sera exécuté l'algorithme de hashage )
-        .then(hash => {
-          // ce qui v a être enregistré dans mangoDB
-          const user = new User({
-            email: req.body.email,
-            password: hash
-          });
-          // envoyer le user dans la base de données 
-          user.save()
-            .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-            .catch(error => res.status(400).json({ error }));
-        })
-        .catch(error => res.status(500).json({ error }));
-    })
-  };
-  
-    //Controllers pour se connecter au site
-  exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
-      .then(user => {
-        if (!user) {
-          return res.status(401).json({ error: 'Utilisateur non trouvé !' });
-        }
-        bcrypt.compare(req.body.password, user.password)
-          .then(valid => {
-            if (!valid) {
-              return res.status(401).json({ error: 'Mot de passe incorrect !' });
-            }
-            res.status(200).json({
-              userId: user._id,
-              token: jwt.sign(
-                { userId: user._id },
-                process.env.SECRET_TOKEN,
-              )
-            });
-          })
-          .catch(error => res.status(500).json({ error }));
-      })
-      .catch(error => res.status(500).json({ error }));
-  
-      };
-      exports.logout = (req, res, next) => {
-        res.cookie("jwt", "", { maxAge: 1 });
-        res.status(200).json({ message: "Utilisateur déconnecté !" });
-      };
       
 // Suppression du compte utilisateur
 
