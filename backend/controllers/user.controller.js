@@ -1,4 +1,4 @@
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
 
 const bcrypt = require("bcrypt");
@@ -21,7 +21,6 @@ exports.signup = (req, res, next) => {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           department: req.body.department
-          
         });
         user.save()
         .then(() =>
@@ -32,7 +31,6 @@ exports.signup = (req, res, next) => {
             res.status(400).json({ error });
           });
       })
-  
       .catch((error) => res.status(500).json({ error }));
     })
   };
@@ -73,8 +71,42 @@ exports.login = (req, res, next) => {
   };
 
   //Récupérer les utilisateurs
+  exports.getAllUsers = (req, res, next) => {
+    User.find()
+      .select("-password")
+      .then((users) => {
+        const numberOfUsers = users.length;
+        for (let i = 0; i < numberOfUsers; i++) {
+          const filename = users[i].picture.split("./images/users/")[1];
+          if (fs.existsSync(`images/users/${filename}`)) {
+          } else {
+            users[i].picture = `${req.protocol}://${req.get(
+              "host"
+            )}/public/default-image.png`;
+          }
+        }
+        res.status(200).json(users);
+      })
+      .catch((error) => res.status(401).json(error));
+  };
   //Récupérer un utilisateur
+  exports.getUser = (req, res, next) => {
+    User.findOne({ _id: req.params.id })
+      .select("-password")
+      .then((user) => {
+        const filename = user.picture.split("images/users")[1];
+        if (fs.existsSync(`images/users/${filename}`)) {
+        } else {
+          user.picture = `${req.protocol}://${req.get(
+            "host"
+          )}/public/default-image.png`;
+        }
+        res.status(200).json(user);
+      })
+      .catch((error) => res.status(401).json(error));
+  };
   //Suppression du compte utilisateur
+
 
       
 // Suppression du compte utilisateur
