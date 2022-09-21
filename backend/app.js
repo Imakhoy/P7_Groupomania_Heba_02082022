@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const express = require('express');
+const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
 const helmet = require('helmet');
@@ -9,6 +10,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
+
 
 //DATABASE
 // Connecter Mongoose avec route MongoDB
@@ -42,8 +44,13 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
-const app = express();
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
