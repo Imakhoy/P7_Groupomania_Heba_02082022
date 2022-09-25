@@ -10,6 +10,8 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
+const { checkUser, requireAuth } = require("./middleware/auth.middleware");
+
 
 
 //DATABASE
@@ -50,6 +52,11 @@ app.use(
     credentials: true,
   })
 );
+
+app.get("*", checkUser);
+app.get("/jwtid", requireAuth, (req, res) => {
+  res.status(200).json(res.locals.user);
+});
 
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);

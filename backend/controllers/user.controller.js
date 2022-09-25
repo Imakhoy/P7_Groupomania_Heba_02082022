@@ -1,11 +1,9 @@
 const dotenv = require("dotenv");
 dotenv.config();
-
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const { signUpError } = require('../utils/errors.utils');
-
 const User = require("../models/user.model");
 
 //Authentification
@@ -69,6 +67,7 @@ exports.login = (req, res, next) => {
     res.status(200).json({ message: "Utilisateur déconnecté !" });
   };
 
+  //Users
   //Récupérer les utilisateurs
   exports.getAllUsers = (req, res, next) => {
     User.find()
@@ -104,7 +103,85 @@ exports.login = (req, res, next) => {
       })
       .catch((error) => res.status(401).json(error));
   };
+  // Mise à jour du compte utilisateur
 
+exports.updateUser = (req, res, next) => {
+  User.findOne({ _id: req.params.id })
+    .then((user) => {
+      if (req.file) {
+        const filename = user.picture.split("images/users")[1];
+        if (fs.existsSync(`images/users/${filename}`)) {
+          fs.unlink(`images/users/${filename}`, () => {
+            User.updateOne(
+              { _id: req.params.id },
+              {
+                picture: `${req.protocol}://${req.get("host")}/images/users/${
+                  req.file.filename
+                }`,
+                _id: req.params.id,
+              }
+            )
+              .then(() => {
+                res.status(200).json("Utilisateur modifié !");
+              })
+              .catch((error) => {
+                res.status(400).json(error);
+              });
+          });
+        } else {
+          User.updateOne(
+            { _id: req.params.id },
+            {
+              picture: `${req.protocol}://${req.get("host")}/images/users/${
+                req.file.filename
+              }`,
+              _id: req.params.id,
+            }
+          )
+            .then(() => {
+              res.status(200).json("Utilisateur modifié !");
+            })
+            .catch((error) => {
+              res.status(400).json(error);
+            });
+        }
+      } else {
+        User.updateOne(
+          { _id: req.params.id },
+          { ...req.body, _id: req.params.id }
+        )
+          .then(() => {
+            res.status(200).json("Utilisateur modifié !");
+          })
+          .catch((error) => {
+            res.status(400).json(error);
+          });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+};
+
+// Modification de mot de passe
+
+exports.updatePassword = (req, res, next) => {
+  bcrypt
+    .hash(req.body.password, 10)
+    .then((hash) => {
+      User.updateOne(
+        { _id: req.params.id },
+        { password: hash, _id: req.params.id }
+      )
+        .then(() => {
+          res.status(200).json("Mot de passe modifié !");
+        })
+        .catch((error) => {
+          res.status(400).json(error);
+        });
+    })
+    .catch((error) => res.status(500).json(error));
+};
 
       
 // Suppression du compte utilisateur

@@ -4,6 +4,8 @@ const fs = require('fs');
 const User = require("../models/user.model");
 const Post = require("../models/post.model");
 
+
+
 // Création du post
 exports.createPost = (req, res, next) => {
   if (req.file) {
@@ -19,7 +21,7 @@ exports.createPost = (req, res, next) => {
     }
 
 const post = new Post({
-  author: req.body.author,
+  userId: req.body.userId,
   content: req.body.content,
   picture: `${req.protocol}://${req.get("host")}/images/posts/${
     req.file.filename
@@ -30,7 +32,7 @@ post.save()
 .catch((error) => res.status(400).json(error));
 } else {
 const post = new Post({
-author: req.body.author,
+  userId: req.body.userId,
 content: req.body.content,
 });
 post.save()
