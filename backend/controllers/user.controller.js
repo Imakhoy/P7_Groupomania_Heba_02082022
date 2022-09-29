@@ -2,11 +2,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const fs = require("fs");
-const { signUpError } = require('../utils/errors.utils');
 const User = require("../models/user.model");
 
-//Authentification
 // Connexion de l'utilisateur
   const maxAge = 7 * 24 * 60 * 60 * 1000;
   const createToken = (id) => {
@@ -28,7 +25,7 @@ exports.signup = (req, res, next) => {
         });
         user.save()
         .then(() =>
-            res.status(201).json({ message: "Compte utilisateur créé !" })
+            res.status(201).json({ message: "Nouvel utilisateur créé !" })
           )
           .catch((err) => {
             const error = signUpError(err);
