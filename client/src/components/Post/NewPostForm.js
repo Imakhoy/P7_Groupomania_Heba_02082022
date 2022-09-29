@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { isEmpty, timestampParser } from "../Utils";
+//import { isEmpty, timestampParser } from "../Utils"; // XX
 import { NavLink } from "react-router-dom";
-import { addPost, getPosts } from "../../actions/post.actions";
+//import { addPost, getPosts } from "../../actions/post.actions"; //XX
 
 const NewPostForm = () => {
   const [isLoading, setIsLoading] = useState(true);

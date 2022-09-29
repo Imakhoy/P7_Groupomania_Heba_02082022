@@ -2,10 +2,10 @@ import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import { UidContext } from "../components/AppContext";
 import LeftNav from '../components/LeftNav';
-import { isEmpty } from "../components/Utils";
-import Card from "../components/Post/Card";
-import Trends from "../components/Trends";
-import FriendsHint from "../components/Profil/FriendsHint";
+//import { isEmpty } from "../components/Utils";//XX
+//import Card from "../components/Post/Card"; //XX
+//import Trends from "../components/Trends";//XX
+//import FriendsHint from "../components/Profil/FriendsHint";//XX
 
 const Trending = () => {
   const uid = useContext(UidContext);

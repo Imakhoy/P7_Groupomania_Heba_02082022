@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPosts } from "../actions/post.actions";
-import Card from "./Post/Card";
-import { isEmpty } from "./Utils";
+//import { getPosts } from "../actions/post.actions"; //XX
+//import Card from "./Post/Card";//XX
+//import { isEmpty } from "./Utils";//XX
 
 const Thread = () => {
   const [loadPost, setLoadPost] = useState(true);

@@ -1,5 +1,5 @@
-import { GET_POST_ERRORS } from "../actions/post.actions";
-import { GET_USER_ERRORS } from "../actions/user.actions";
+//import { GET_POST_ERRORS } from "../actions/post.actions";//XX
+//import { GET_USER_ERRORS } from "../actions/user.actions";//XX
 
 const initialState = { userError: [], postError: []};
 

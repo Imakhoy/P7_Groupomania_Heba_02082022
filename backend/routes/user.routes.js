@@ -1,7 +1,7 @@
 const express = require('express');
 const limit = require('../middleware/limit');
 const password = require('../middleware/password.validator');
-
+//const multer = require('..')
 const router = express.Router();
 const userCtrl = require('../controllers/user.controller');
 
@@ -13,7 +13,7 @@ router.get('/logout', userCtrl.logout);
 // Comptes utilisateurs
 router.get("/", userCtrl.getAllUsers);
 router.get("/:userId", userCtrl.getUser);
-router.put("/:userId", multer, userCtrl.updateUser);
+router.put("/:userId", userCtrl.updateUser);
 router.put("/:userId/password", userCtrl.updatePassword);
 router.delete("/delete/:userId", userCtrl.deleteUser);
 

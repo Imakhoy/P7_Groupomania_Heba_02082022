@@ -4,8 +4,8 @@ import LeftNav from "../components/LeftNav";
 import NewPostForm from "../components/Post/NewPostForm";
 import Thread from "../components/Thread";
 import Log from "../components/Log";
-import Trends from "../components/Trends";
-import FriendsHint from "../components/Profil/FriendsHint";
+//import Trends from "../components/Trends"; //XX
+//import FriendsHint from "../components/Profil/FriendsHint"; //XX
 
 const Home = () => {
   const uid = useContext(UidContext);

@@ -1,10 +1,12 @@
+/*
 import {
     FOLLOW_USER,
     GET_USER,
     UNFOLLOW_USER,
     UPDATE_BIO,
     UPLOAD_PICTURE,
-  } from "../actions/user.actions";
+  } from "../actions/user.actions"; //XX
+  */
   
   const initialState = {};
   

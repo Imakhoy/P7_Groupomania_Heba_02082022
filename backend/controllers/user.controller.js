@@ -7,6 +7,13 @@ const { signUpError } = require('../utils/errors.utils');
 const User = require("../models/user.model");
 
 //Authentification
+// Connexion de l'utilisateur
+  const maxAge = 7 * 24 * 60 * 60 * 1000;
+  const createToken = (id) => {
+  return jwt.sign({ id }, process.env.TOKEN_SECRET, {
+    expiresIn: maxAge,
+  });
+};
 //Creation du compte utilisateur
 exports.signup = (req, res, next) => {
   bcrypt.genSalt(parseInt(process.env.SALT))
@@ -32,13 +39,6 @@ exports.signup = (req, res, next) => {
     })
   };
   
-  // Connexion de l'utilisateur
-  const maxAge = 7 * 24 * 60 * 60 * 1000;
-  const createToken = (id) => {
-  return jwt.sign({ id }, process.env.TOKEN_SECRET, {
-    expiresIn: maxAge,
-  });
-};
 exports.login = (req, res, next) => {
     User.findOne({
       email: req.body.email,

@@ -1,9 +1,21 @@
-const mongoose = require('mongoose');
+const Post = require("../models/post.model");
 const fs = require('fs');
 
-const User = require("../models/user.model");
-const Post = require("../models/post.model");
-
+// Fonction permetttant d'afficher tous les posts
+exports.displayAllPosts = (req, res, next) => {
+  Post.find()
+  .then(
+    (posts) => {
+      res.status(200).json(posts);
+    }
+  ).catch(
+    (error) => {
+      res.status(400).json({
+        error: error
+      });
+    }
+  );
+};
 
 
 // Création du post

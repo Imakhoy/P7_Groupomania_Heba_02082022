@@ -1,4 +1,4 @@
-import {
+/*import {
     DELETE_COMMENT,
     DELETE_POST,
     EDIT_COMMENT,
@@ -6,7 +6,7 @@ import {
     LIKE_POST,
     UNLIKE_POST,
     UPDATE_POST,
-  } from "../actions/post.actions";
+  } from "../actions/post.actions"; */
   
   const initialState = {};
   
