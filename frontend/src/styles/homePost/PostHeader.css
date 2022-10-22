@@ -1,0 +1,15 @@
+.postHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 8px;
+}
+
+.headerInfos {
+    color: #4E5166;
+    font-size: 17px;
+    padding-bottom: 4px;
+    margin: 5px;
+    border-bottom: 1.5px solid #4E5166 ;
+}

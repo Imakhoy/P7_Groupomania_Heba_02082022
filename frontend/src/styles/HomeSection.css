@@ -1,0 +1,6 @@
+.homeSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 7% 0 7% 0;
+}

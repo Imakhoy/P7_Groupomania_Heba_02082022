@@ -1,0 +1,19 @@
+.connexionForm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.connexionText {
+    color: #4E5166;
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.connexionInput {
+    border: 2px solid #FD2D01;
+    background-color: #FFD7D7;
+    height: 24px; 
+    width: 190px;
+    font-size: 16px;
+}

@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+
+.headerButton {
+    font-size: 20px;
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+    color: #4E5166;
+    background: none;
+    border: none;
+    height: 30px;
+    width: auto;
+    margin: 0 25px 0 25px;
+}
+
+.headerButton:hover {
+    background-color: #FFD7D7;
+    border: 2px #FFD7D7;
+    border-radius:15px;
+    cursor: pointer;
+}

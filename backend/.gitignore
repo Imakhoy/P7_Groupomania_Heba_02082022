@@ -1,4 +1,3 @@
 /nodes_modules
 .env
 images/*
-!images/.gitkeep

@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+.sectionButton {
+    background-color: #FD2D01;
+    border: 2px #FD2D01;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    width: 93px;
+    height: 25px;
+    font-family: 'Lato', sans-serif;
+}
+
+.sectionButton:hover {
+    background-color: #FFD7D7;
+    color: black;
+    cursor: pointer;
+}
+
+.loginButton {
+    width: 120px;
+}
+
+
+.publishButton {
+    width: 130px;
+    height: 40px;
+    font-size: 25px;
+    border-radius: 30px;
+}

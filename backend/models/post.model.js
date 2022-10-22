@@ -1,19 +1,12 @@
 const mongoose = require('mongoose');
 
-const postSchema = mongoose.Schema(
-  {
-    userId: { type: String, required: true },
-    title: { type: String, required: true },
-    content: { type: String, required: true },
-    picture: { type: String, required: false},
-    likes: { type: Number, default: 0 },
-    dislikes: { type: Number, default: 0 },
-    usersLiked: { type: [String] },
-    usersDisliked: { type: [String] },
-  },
-  { timestamps: true }
-);
+const postSchema = mongoose.Schema({
+  userId: { type: String, required: true },
+  date : { type: String, required: true },
+  postText: { type: String, required: true },
+  imageUrl: { type: String, required: true },
+  likes: { type: Number, required: true },
+  usersLiked: { type: [ "String <userId>" ], required: true },
+});
 
-module.exports = mongoose.model('Post', postSchema);
-  
-  
+module.exports = mongoose.model('post', postSchema);

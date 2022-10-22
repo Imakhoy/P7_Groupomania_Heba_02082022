@@ -18,7 +18,7 @@ exports.displayAllPosts = (req, res, next) => {
   };
 
 
-// créer et d'enregistrer un post
+//Fonction permettant de créer et d'enregistrer un post dans la base de données
 exports.createPost = (req, res, next) => {
   const postObject = JSON.parse(req.body.post);
   delete postObject._id;
@@ -35,7 +35,7 @@ exports.createPost = (req, res, next) => {
   .catch(error => { res.status(400).json( { error })})
 };
 
-//modifier un post 
+//Fonction permettant de modifier un post déjà publié
 exports.modifyPost = (req, res, next) => {
   const postObject = req.file ? {
     ...JSON.parse(req.body.post),
@@ -58,7 +58,7 @@ exports.modifyPost = (req, res, next) => {
     });
   };
 
-//supprimer un post
+// Fonction permettant de supprimer un post
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id})
     .then(post => {
@@ -78,7 +78,7 @@ exports.deletePost = (req, res, next) => {
     });
   };
 
-// liker un post
+// Fonction permettant de liker un post
 exports.likePost = (req, res, next) => {
   Post.findOne({_id: req.params.id})
     .then(

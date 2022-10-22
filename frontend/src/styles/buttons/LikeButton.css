@@ -1,0 +1,15 @@
+.likeButton {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.likeButtonIcone {
+    color: #4E5166;
+    font-size: 25px;
+}
+
+.likeButtonIcone:hover {
+    cursor: pointer;
+}

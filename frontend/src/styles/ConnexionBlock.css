@@ -1,0 +1,17 @@
+.connexionBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.blockTitle {
+    font-size: 26px;
+    color: #FD2D01;
+    border-bottom: 2px solid #FD2D01;
+    padding-bottom: 5px;
+    width: 150px;
+}
+
+.loginBlockTitle {
+    width: 180px;
+}

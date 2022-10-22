@@ -1,0 +1,10 @@
+.connexionHeader {
+    border-bottom: 5px solid #FFD7D7 ;
+    display: flex;
+    justify-content: center;
+}
+
+.logoConnexionHeader {
+    height: 140px;
+    width: 280px
+}
