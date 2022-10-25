@@ -12,8 +12,6 @@ const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
 const { checkUser, requireAuth } = require("./middleware/auth.middleware");
 
-
-
 //DATABASE
 // Connecter Mongoose avec route MongoDB
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}.mongodb.net/?retryWrites=true&w=majority`,
