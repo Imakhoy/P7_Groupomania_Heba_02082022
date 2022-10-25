@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
 
-// Connexion de l'utilisateur
+//DUREE MAX DU TOKEN CREE
   const maxAge = 7 * 24 * 60 * 60 * 1000;
   const createToken = (id) => {
   return jwt.sign({ id }, process.env.TOKEN_SECRET, {
