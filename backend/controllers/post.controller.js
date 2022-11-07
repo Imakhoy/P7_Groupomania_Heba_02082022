@@ -1,105 +1,166 @@
-const Post = require('../models/post.model');
-const fs = require('fs');
+//REQUIRE
+const Post = require("../models/post.models");
 
-// Fonction permetttant d'afficher tous les posts
-exports.displayAllPosts = (req, res, next) => {
-    Post.find()
-    .then(
-      (posts) => {
-        res.status(200).json(posts);
+/*const User = require("../models/user.model");
+const { uploadErrors } = require("../utils/errors.utils");
+const ObjectID = require("mongoose").Types.ObjectId;
+const fs = require("fs");
+const { promisify } = require("util");
+const pipeline = promisify(require("stream").pipeline);
+
+//GET
+module.exports.readPost = (req, res) => {
+  PostModel.find((err, data) => {
+    if (!err) {
+      res.send(data);
+    } else {
+      console.log("Error to get data : " + err);
+    }
+  });
+};
+
+//CREATE
+module.exports.createPost = async (req, res) => {
+  let filename;
+
+  if (req.file != null) {
+    try {
+      if (
+        req.file.detectedMimeType != "image/jpg" &&
+        req.file.detectedMimeType != "image/png" &&
+        req.file.detectedMimeType != "image/jpeg"
+      ) {
+        console.log(req.file);
+        throw Error("invalid file");
       }
-    ).catch(
-      (error) => {
-        res.status(400).json({
-          error: error
-        });
+      if (req.file.size > 500000) {
+        throw Error("max size");
       }
+    } catch (err) {
+      const errors = uploadErrors(err);
+      return res.status(201).json({ errors });
+    }
+    filename = req.body.postId + Date.now() + ".jpg";
+
+    await pipeline(
+      req.file.stream,
+      fs.createWriteStream(`../frontend/public/img/posts/${filename}`)
     );
-  };
+  }
 
-
-//Fonction permettant de créer et d'enregistrer un post dans la base de données
-exports.createPost = (req, res, next) => {
-  const postObject = JSON.parse(req.body.post);
-  delete postObject._id;
-  delete postObject._userId;
-  const post = new Post({
-      ...postObject,
-      userId: req.auth.userId,
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-      likes: 0, 
+  const newPost = new PostModel({
+    postId: req.body.postId,
+    message: req.body.message,
+    picture: req.file != null ? "img/posts/" + filename : "",
+    video: req.body.video,
+    likers: [],
   });
 
-  post.save()
-  .then(() => { res.status(201).json({message: 'Post enregistré'})})
-  .catch(error => { res.status(400).json( { error })})
+  try {
+    const post = await newPost.save();
+    return res.status(201).json(post);
+  } catch (err) {
+    return res.status(400).send(err);
+  }
 };
 
-//Fonction permettant de modifier un post déjà publié
-exports.modifyPost = (req, res, next) => {
-  const postObject = req.file ? {
-    ...JSON.parse(req.body.post),
-    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-  } : { ...req.body };
-    
-  delete postObject._userId;
-  Post.findOne({_id: req.params.id})
-    .then((post) => {
-      if (post.userId != req.auth.userId) {
-          res.status(403).json({ message : 'unauthorized request'});
+//PUT
+module.exports.updatePost = (req, res) => {
+  if (!ObjectID.isValid(req.params.id)) {
+    return res.status(400).send("Id inconnu : " + req.params.id);
+  }
+
+  const updatedMessage = {
+    message: req.body.message,
+  };
+
+  PostModel.findByIdAndUpdate(
+    req.params.id,
+    { $set: updatedMessage },
+    { new: true },
+    (err, data) => {
+      if (!err) {
+        res.send(data);
       } else {
-          Post.updateOne({ _id: req.params.id}, { ...postObject, _id: req.params.id})
-          .then(() => res.status(200).json({message : 'Post modifié!'}))
-          .catch(error => res.status(401).json({ error }));
+        console.log("Erreur de modification : " + err);
       }
-    })
-    .catch((error) => {
-      res.status(400).json({ error });
-    });
-  };
-
-// Fonction permettant de supprimer un post
-exports.deletePost = (req, res, next) => {
-  Post.findOne({ _id: req.params.id})
-    .then(post => {
-      if (post.userId != req.auth.userId) {
-        res.status(401).json({message: 'Non autorisé'});
-      } else {
-          const filename = post.imageUrl.split('/images/')[1];
-          fs.unlink(`images/${filename}`, () => {
-            Post.deleteOne({_id: req.params.id})
-            .then(() => { res.status(200).json({message: 'Post supprimé'})})
-            .catch(error => res.status(401).json({ error }));
-          });
-        }
-    })
-    .catch( error => {
-        res.status(500).json({ error });
-    });
-  };
-
-// Fonction permettant de liker un post
-exports.likePost = (req, res, next) => {
-  Post.findOne({_id: req.params.id})
-    .then(
-      (post) => {
-          if (post.usersLiked.includes(req.body.userId)) {
-            res.status(401).json({ message : 'Post déjà liké'});
-          } 
-          else {
-            post.usersLiked.push(req.body.userId);
-            post.likes++;
-            post.save()
-              .then(() => { res.status(201).json({message: 'Post enregistré'})})
-              .catch(error => { res.status(400).json( { error })});
-            }
-          })
-              
-      .catch(
-        (error) => {
-          res.status(404).json({
-            error: error
-          });
-        }
-      );
+    }
+  );
 };
+
+//DELETE
+module.exports.deletePost = (req, res) => {
+  if (!ObjectID.isValid(req.params.id)) {
+    return res.status(400).send("Id inconnu : " + req.params.id);
+  }
+
+  PostModel.findByIdAndRemove(req.params.id, (err, data) => {
+    if (!err) {
+      res.send(data);
+    } else {
+      console.log("Erreur de suppression" + err);
+    }
+  });
+};
+
+//LIKE DU POST
+module.exports.likePost = async (req, res) => {
+  if (!ObjectID.isValid(req.params.id)) {
+    return res.status(400).send("Id inconnu : " + req.params.id);
+  }
+
+  try {
+    await PostModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $addToSet: { likers: req.body.id },
+      },
+      { new: true }
+    ).catch((err) => res.status(400).send(err));
+
+    await UserModel.findByIdAndUpdate(
+      req.body.id,
+      {
+        $addToSet: { likes: req.params.id },
+      },
+      { new: true }
+    )
+      .then((data) => {
+        return res.send(data);
+      })
+      .catch((err) => res.status(400).send(err));
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+};
+
+//UNLIKE DU POST
+module.exports.unlikePost = async (req, res) => {
+  if (!ObjectID.isValid(req.params.id)) {
+    return res.status(400).send("Id inconnu : " + req.params.id);
+  }
+  try {
+    await PostModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $pull: { likers: req.body.id },
+      },
+      { new: true }
+    ).catch((err) => res.status(400).send(err));
+
+    await UserModel.findByIdAndUpdate(
+      req.body.id,
+      {
+        $pull: { likes: req.params.id },
+      },
+      { new: true }
+    )
+      .then((data) => {
+        return res.send(data);
+      })
+      .catch((err) => res.status(400).send(err));
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+};
+*/
