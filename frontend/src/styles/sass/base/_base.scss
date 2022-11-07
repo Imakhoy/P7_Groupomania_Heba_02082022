@@ -1,0 +1,26 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+body {
+    min-width: 350px;
+    max-width: 1300px;
+}
+
+ul {
+    list-style: none;
+}
+
+.error {
+    color: red;
+    font-family: 'Lato-Bold', 'Courier New', Courier, monospace;
+}
+
+.success {
+    color: green;
+    font-family: 'Lato-Bold', 'Courier New', Courier, monospace;
+}
