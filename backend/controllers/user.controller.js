@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const userId = require("../models/user.model");
+const User = require("../models/user.model");
 
 //DUREE MAX DU TOKEN CREE
   const maxAge = 7 * 24 * 60 * 60 * 1000;
