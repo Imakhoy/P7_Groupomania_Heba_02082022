@@ -1,15 +1,17 @@
-const express = require('express');
-const router = express.Router();
-const multer = require('../middleware/multer.middleware');
-const postCtrl = require('../controllers/post.controller');
+const router = require("express").Router();
+const postController = require("../controllers/post.controller");
 
-// Posts
-router.post("/",multer, postCtrl.createPost);
-router.get("/", postCtrl.getAllPosts);
-router.get("/:userId", postCtrl.getOnePost);
-router.put("/:userId", multer, postCtrl.modifyPost);
+const auth = require('../middleware/auth');
+//const multer = require('../middleware/multer-config');
 
-router.delete("/:userId", postCtrl.deletePost);
-router.post("/:userId/like", postCtrl.likePost);
+//CRUD POST
+//router.get("/", postController.readPost);
+//router.post("/", upload.single("file"), postController.createPost);
+//router.put("/:id", postController.updatePost);
+//router.delete("/:id", postController.deletePost);
+
+//LIKE
+//router.patch("/like-post/:id", postController.likePost);
+//router.patch("/unlike-post/:id", postController.unlikePost);
 
 module.exports = router;

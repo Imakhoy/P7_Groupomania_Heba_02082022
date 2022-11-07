@@ -1,22 +1,14 @@
-const express = require('express');
+const router = require("express").Router();
+const userController = require("../controllers/user.controller");
 const limit = require('../middleware/limit');
-const password = require('../middleware/password.validator');
-const multer = require('../middleware/multer.middleware')
-const router = express.Router();
-const userCtrl = require('../controllers/user.controller');
+const email = require('../middleware/email');
+const password = require('../middleware/password');
 
-//Authentification
-router.post('/signup',password, userCtrl.signup);
-router.post('/login',limit.limiter, userCtrl.login);
-router.get('/logout', userCtrl.logout);
+//AUTHENTIFICATION
+router.post("/register",email,password,userController.signup);
+router.post("/login", limit, userController.signin);
+router.get("/logout", userController.logout);
 
-// Comptes utilisateurs
-router.get("/", userCtrl.getAllUsers);
-router.get("/:userId", userCtrl.getUser);
-router.put("/:userId", userCtrl.updateUser);
-router.put("/:userId/password", userCtrl.updatePassword);
-router.delete("/delete/:userId", userCtrl.deleteUser);
+
 
 module.exports = router;
-
-
