@@ -1,0 +1,19 @@
+nav {
+    width: 100%;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+    border-top: solid 2px $primary-color;
+    background-color: white;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+  
+    .navbar {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+    }
+}
