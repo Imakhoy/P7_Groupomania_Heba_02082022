@@ -92,7 +92,6 @@ nav .navbar {
   display: flex;
   flex-direction: column;
   padding-left: 50px;
-  padding-top: 0px;
 }
 
 body {
