@@ -2,6 +2,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
+const mongoose = require ("mongoose");
 
 //CREATION DE COMPTE
 exports.signup = (req, res, next) => {
@@ -57,6 +58,14 @@ exports.signin = (req, res, next) => {
   const createToken = (userId) => {
   return jwt.sign({userId: userId}, process.env.SECRET_TOKEN, {expiresIn: '24h' });
 }
+
+exports.getUser = (req, res, next) => {
+  if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+    User.findOne({ _id: req.params.id }).select('-password').then(user => {
+      res.send(user);
+    });
+  }
+};
 
 //DECONNEXION
 exports.logout = (req, res) => {
