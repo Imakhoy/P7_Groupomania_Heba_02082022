@@ -13,7 +13,7 @@ function Logout() {
   const logout = async () => {
     await axios({
       method: 'get',
-      url: `${process.env.REACT_APP_API_URL}api/user/logout`,
+      url: `${process.env.REACT_APP_API_URL}api/auth/logout`,
       withCredentials: true,
     })
       .then(() => {

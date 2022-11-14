@@ -1,15 +1,20 @@
 const express = require("express");
-const cookieParser = require("cookie-parser");
-const helmet = require("helmet")
-const path = require("path");
+const helmet = require("helmet");
+const path = require('path');
+const cookieParser = require('cookie-parser');
 
-//MIDDLEWARE
-const auth = require("./middleware/auth");
+// ROUTES
+const userRoutes = require('./routes/user');
+const postRoutes = require('./routes/post');
+
+const auth = require('./middleware/auth');
 
 const app = express();
 
-const userRoutes = require("./routes/user.routes");
-const postRoutes = require("./routes/post.routes");
+// Parse requests of content-type - application/json
+app.use(express.json());
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // HELMET
 app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } },
@@ -24,21 +29,20 @@ app.use((req, res, next) => {
   next();
 });
 
-// Parse requests of content-type - application/json
-app.use(express.json());
+app.use(cookieParser());
 
 // Parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
-//JWT
-app.get("/jwtid", auth.requireAuth, (req, res) => {
-  res.status(200).send(req.auth.userId);
+// jwt
+app.get('/jwtid', auth.requireAuth, (req, res) => {
+  res.status(200).send(req.auth.userId)
 });
 
-//ROUTES
-app.use("/api/user", userRoutes);
-app.use("/api/post", postRoutes);
+// USE ROUTES
+app.use('/api/auth', userRoutes);
+app.use('/api/post', postRoutes);
+
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;

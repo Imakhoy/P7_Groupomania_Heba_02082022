@@ -1,48 +1,38 @@
-import { GET_POSTS } from '../actions/post.actions'
-import { DELETE_POST } from '../actions/post.actions'
-import { LIKE_POST } from '../actions/post.actions'
-import { UNLIKE_POST } from '../actions/post.actions'
-import { UPDATE_POST } from '../actions/post.actions'
-
+import { GET_POSTS, LIKE_POST, UNLIKE_POST, DELETE_POST } from '../actions/post.actions'
 const initialState = {}
 
-
 export default function postReducer(state = initialState, action) {
-    switch (action.type) {
-      case GET_POSTS:
-        return action.payload;
-      case LIKE_POST:
-        return state.map((post) => {
-          if (post._id === action.payload.postId) {
-            return {
-              ...post,
-              likers: [action.payload.userId, ...post.likers],
-            };
+  switch (action.type) {
+    case GET_POSTS:
+      return action.payload
+    case LIKE_POST:
+      return state.map((post) => {
+        if (post._id === action.payload.id) {
+          return {
+            ...post,
+            usersLiked: [action.payload.userId, ...post.usersLiked],
           }
-          return post;
-        });
-      case UNLIKE_POST:
-        return state.map((post) => {
-          if (post._id === action.payload.postId) {
-            return {
-              ...post,
-              likers: post.likers.filter((id) => id !== action.payload.userId),
-            };
+        }
+        return post
+      })
+    case UNLIKE_POST:
+      return state.map((post) => {
+        if (post._id === action.payload.id) {
+          return {
+            ...post,
+            usersLiked: post.usersLiked.filter(
+              (id) => id !== action.payload.userId
+            ),
           }
-          return post;
-        });
-      case UPDATE_POST:
-        return state.map((post) => {
-          if (post._id === action.payload.postId) {
-            return {
-              ...post,
-              message: action.payload.message,
-            };
-          } else return post;
-        });
+        }
+        return post
+      })
+
       case DELETE_POST:
-        return state.filter((post) => post._id !== action.payload.postId);
-        default:
-        return state;
-    }
+        return state.filter((post) => post._id !== action.payload.id);
+        
+    default:
+      return state
   }
+}
+

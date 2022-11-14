@@ -9,3 +9,24 @@
         background-color: $color-primary;
     }
 }
+
+.rate-button {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    i {
+        font-size: 25px;
+        cursor: pointer;
+    }
+    &__nb {
+        border: 1px solid $color-tertiary;
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+    }
+}
