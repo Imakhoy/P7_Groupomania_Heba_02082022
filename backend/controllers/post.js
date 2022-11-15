@@ -64,6 +64,33 @@ exports.getAllPost = (req, res, next) => {
     );
 };
 
+
+// Modification d'un post
+exports.modifyPost = (req, res, next) => {
+  const postObject = req.file ? {
+      ...JSON.parse(req.body.post),
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  } : { ...JSON.parse(req.body.post) };
+  Post.findOne({_id: req.params.id})
+  .then((post) => {
+    User.findOne({_id: postObject.userId})
+    .then((user) => {
+      if ((post.userId === postObject.userId) || user.isAdmin) {
+              delete postObject.userId;
+              Post.updateOne({ _id: req.params.id}, { ...postObject, _id: req.params.id})
+                  .then(() => res.status(200).json({message : 'Post modifié!'}))
+                  .catch(error => res.status(400).json({ error }));
+            } else {
+              res.status(403).json({ message : 'Unauthorized request'});
+            }
+          });
+      })
+      .catch((error) => {
+          res.status(500).json({ error });
+      });
+};
+
+//  Supression d'un post
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id})
       .then((post) => {

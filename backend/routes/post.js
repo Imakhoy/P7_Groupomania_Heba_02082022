@@ -11,8 +11,7 @@ router.post('/opinionPost/:id', auth, postCtrl.opinionPost);
 router.post('/', auth, multer.single("post_image"), postCtrl.createPost);
 router.delete('/:id', auth, postCtrl.deletePost);
 
-// router.get('/:id', auth, postCtrl.getOnePost);
-// router.put('/:id', auth, multer.single("post_image"), postCtrl.modifyPost);
-// router.post('/:id/like', auth, postCtrl.likePost);
+router.put('/:id', auth, multer.single("post_image"), postCtrl.modifyPost);
+
 
 module.exports = router;
