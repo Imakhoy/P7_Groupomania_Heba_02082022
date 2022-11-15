@@ -58,6 +58,8 @@ function NewPostForm() {
           <span>
             {userData.firstName} {userData.lastName}
           </span>
+          </div>
+          <div className='post-form'>
           <textarea
             name="title"
             id="title"

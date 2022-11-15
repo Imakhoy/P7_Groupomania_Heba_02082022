@@ -11,12 +11,14 @@
         }
     }
     &__times {
-        display: flex;
+        display:contents;
         justify-content: space-between;
+
     }
     &__rates {
-        display: flex;
+        display:contents;
         flex-direction: column;
         align-items: flex-end;
+
     }
 }

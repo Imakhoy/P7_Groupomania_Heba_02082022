@@ -10,13 +10,17 @@ Backend config :
     nodemon server.js
 
     Créez le fichier .env dans backend/ avec les données suivantes
-        port localhost
-        PORT=5000 
-        URL client
-        CLIENT_URL='http://localhost:3000' 
-        votre user name DB_USERNAME
-        votre mot de passe DB_USER_PASS
-        votre clé secrète aléatoire : TOKEN_SECRET
+    CLIENT_URL='http://localhost:3000'
+    DB_CLUSTER='xxxxxxxxxxxxxxxxxxxx'
+    DB_USERNAME='xxxxxxxxxx'
+    DB_PASSWORD='xxxxxxxxxxx'
+    DB_NAME='xxxxxxx'
+    PORT=xxxx
+    SECRET_TOKEN="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    SALT=xx 
+    
+    Et pour le frontend :
+    REACT_APP_API_URL=http://localhost:5000/    
         
         Démarrer le server :
         npm start
