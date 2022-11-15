@@ -18,18 +18,18 @@ function NewPostForm() {
   }
 
   const handlePost = async () => {
-        if (!titlePost || !contentPost || !file) {
+    if (!titlePost || !contentPost || !file) {
       errorForm.innerHTML =
-        'Le titre et le texte du post<br> ne doivent pas être vides'
+        "Le titre, le texte et l'image du post ne doivent pas être vides"
     } else {
-        const data = new FormData()
-        data.append('userId', userData._id)
-        data.append('title', titlePost)
-        data.append('content', contentPost)
-        data.append('post_image', file)
-        await dispatch(addPost(data))
-        dispatch(getPosts())
-        cancelPost()
+      const data = new FormData()
+      data.append('userId', userData._id)
+      data.append('title', titlePost)
+      data.append('content', contentPost)
+      data.append('post_image', file)
+      await dispatch(addPost(data))
+      dispatch(getPosts())
+      cancelPost()
     }
   }
 
@@ -52,14 +52,12 @@ function NewPostForm() {
   }
 
   return (
-    <div className="post-container">
+    <div className="new-post">
       <>
-        <div className="data">
+        <div className="new-post__input">
           <span>
             {userData.firstName} {userData.lastName}
           </span>
-        </div>
-        <div className="post-form">
           <textarea
             name="title"
             id="title"
@@ -70,7 +68,6 @@ function NewPostForm() {
             value={titlePost}
           />
           <textarea
-            className="text-area"
             name="content"
             id="content"
             placeholder="Contenu du post"
@@ -79,27 +76,29 @@ function NewPostForm() {
             onChange={(e) => handleUserTyping('content', e.target.value)}
             value={contentPost}
           />
+        </div>
+        <div>
           {titlePost || contentPost || imagePost ? (
-            <li className="card-container">
-              <div className="card-right">
-                <div className="card-header">
-                  <div className="pseudo">
-                    <h3>
-                      {userData.firstName} {userData.lastName}
-                    </h3>
+            <li>
+              <div className="card-post">
+                <div className="card-post__description">
+                  <p>
+                    {userData.firstName} {userData.lastName}
+                  </p>
+                  <div className="card-post__times">
+                    <span>{timestampParser(Date.now())}</span>
                   </div>
-                  <span>{timestampParser(Date.now())}</span>
-                </div>
-                <div className="content">
-                  <p className="card-title">{titlePost}</p>
-                  <p>{contentPost}</p>
-                  <img src={imagePost} alt="" />
+                  <div>
+                    <h2>{titlePost}</h2>
+                    <p>{contentPost}</p>
+                  </div>
+                  <img src={imagePost} alt=""></img>
                 </div>
               </div>
             </li>
           ) : null}
-          <div className="footer-form">
-            <div className="icon">
+          <div className="new-post__actions">
+            <div>
               <>
                 <img src="./img/icons/picture.svg" alt="Ajouter un fichier" />
                 <input
@@ -113,17 +112,13 @@ function NewPostForm() {
               </>
             </div>
             <div className="error errorInCreate"></div>
-            <div className="btn-send">
+            <div>
               {titlePost || contentPost || imagePost ? (
-                <button
-                  className="cancel"
-                  aria-label="Annuler"
-                  onClick={cancelPost}
-                >
+                <button aria-label="Annuler" onClick={cancelPost}>
                   Annuler
                 </button>
               ) : null}
-              <button className="send" aria-label="Poster" onClick={handlePost}>
+              <button aria-label="Poster" onClick={handlePost}>
                 Poster
               </button>
             </div>

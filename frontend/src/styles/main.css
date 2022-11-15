@@ -16,7 +16,7 @@ body {
   margin: 0px 20px;
 }
 
-ul {
+ul, li {
   list-style: none;
 }
 
@@ -28,6 +28,15 @@ ul {
 .success {
   color: green;
   font-family: "Lato-Bold", "Courier New", Courier, monospace;
+}
+
+textarea {
+  margin: 5px;
+  border-radius: 10px;
+  border: 1px solid #4E5166;
+  padding: 5px;
+  width: 100%;
+  resize: none;
 }
 
 * {
@@ -113,6 +122,10 @@ h1 {
 .card-post__description {
   text-align: center;
 }
+.card-post__description img {
+  height: 200px;
+  max-width: 100%;
+}
 .card-post__times {
   display: flex;
   justify-content: space-between;
@@ -121,6 +134,26 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+}
+
+.new-post {
+  border: 3px solid #FD2D01;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 20px;
+}
+.new-post__input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.new-post__input span {
+  margin-bottom: 10px;
+}
+.new-post__actions {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .header {

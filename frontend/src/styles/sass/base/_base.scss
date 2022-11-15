@@ -16,7 +16,7 @@ body {
     margin: 0px 20px;
 }
 
-ul {
+ul, li {
     list-style: none;
 }
 
@@ -28,4 +28,13 @@ ul {
 .success {
     color: green;
     font-family: 'Lato-Bold', 'Courier New', Courier, monospace;
+}
+
+textarea {
+    margin: 5px;
+    border-radius: 10px;
+    border: 1px solid $color-tertiary;
+    padding: 5px;
+    width: 100%;
+    resize: none;
 }

@@ -69,13 +69,13 @@ exports.getAllPost = (req, res, next) => {
 exports.modifyPost = (req, res, next) => {
   const postObject = req.file ? {
       ...JSON.parse(req.body.post),
-      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+      imageUrl: `${req.protocol}://${req.get('host')}/images/post/${req.file.filename}`
   } : { ...JSON.parse(req.body.post) };
   Post.findOne({_id: req.params.id})
   .then((post) => {
     User.findOne({_id: postObject.userId})
     .then((user) => {
-      if ((post.userId === postObject.userId) || user.isAdmin) {
+      if ((post.userId === postObject.userId) || user.admin) {
               delete postObject.userId;
               Post.updateOne({ _id: req.params.id}, { ...postObject, _id: req.params.id})
                   .then(() => res.status(200).json({message : 'Post modifié!'}))

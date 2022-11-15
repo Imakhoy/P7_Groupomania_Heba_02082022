@@ -5,6 +5,10 @@
     padding: 10px;
     &__description {
         text-align: center;
+        img {
+            height: 200px;
+            max-width: 100%;
+        }
     }
     &__times {
         display: flex;
